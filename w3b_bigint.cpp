@@ -1,7 +1,5 @@
 #include<string>
 #include<vector>
-/*#include <iostream>
-#include<algorithm>*/
 
 using namespace std;
 
@@ -17,7 +15,6 @@ Poly add_poly(const Poly &a,const Poly &b)
     int N;
     vector<unsigned long long int>A=a;
     vector<unsigned long long int>B=b;
-    //vector<unsigned long long int>C;
     if (A.size()>B.size())
     {    N=A.size();
          while(A.size()>B.size())
@@ -61,11 +58,8 @@ BigInt multiply_int(const BigInt &a,const BigInt &b)
       char c;
       string B=b;
       char z='0';
-      //unsigned long long int t=0;
       string x;
-      int y;
       int m;
-      //vector<string> n;
       vector<unsigned long long int>p;
       vector<unsigned long long int>q;
       vector<unsigned long long int>r;
@@ -73,21 +67,14 @@ BigInt multiply_int(const BigInt &a,const BigInt &b)
       for (unsigned int i=0;i<A.length();i++)
       {
         c=A[i];
-        //p[i]=stoi(m[i]);
-        //cout<< c-z << endl;
         p.push_back(c-z);
       }
-      //cout << typeid(p[0]).name() << p[1] << p[2] <<endl;
       for (unsigned int k=0;k<B.length();k++)
       {
         c=B[k];
-        //q[i]=stoi(n[i]);
         q.push_back(c-z);
-        //cout << q[0] <<endl;
       }
       r=multiply_poly(p,q);
-      //cout << r.size() << endl;
-      //reverse(r.begin(),r.end());
       for(unsigned int f=0;f<r.size();f++)
         s.insert(s.begin(),r[f]);
       for(unsigned int j=0;j<s.size();j++)
@@ -109,30 +96,5 @@ BigInt multiply_int(const BigInt &a,const BigInt &b)
         r.insert(r.begin(),s[f]);
       for(unsigned int l=0;l<r.size();l++)
         x+=to_string(r[l]);
-      /*for (unsigned int j=0;j<r.size();j++)
-      {
-          for(unsigned int l=r.size()-j-1; l>0; l--)
-          {
-                m*=10;
-                //cout << m << endl;
-          }
-          t+=r[j]*m+r[-1];
-          m=1;
-          cout << "t" << t << endl;
-      }*/
       return x;
 }
-
-
-
-/*int main()
-{
-
-  BigInt A,B;
-
-  cin >> A >> B;
-
-  cout << multiply_int(A,B) << endl;
-
-}
-*/
