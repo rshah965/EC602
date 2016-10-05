@@ -1,5 +1,4 @@
 # Author Rishab Shah rishah@bu.edu
-# Author Deepak T S deepakts@bu.edu
 class Polynomial():
 
 	def __init__(self,value=[0]):
