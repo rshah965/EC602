@@ -2,14 +2,13 @@
 class Polynomial():
 
 	def __init__(self,value=[0]):
-		self.d=value
-		self.dict={}
-		#print(value)
-		x=len(value)-1
+		self.d=value	#value is a list
+		self.dict={}	#initialize empty dict
+		x=len(value)-1	#range of values
 		for i in self.d:
 			if i!=0:
 				self.dict[x]=i
-			x-=1
+			x-=1	#Outside if loop so that it iterates even when i==0(value=0)
 			
 
 	def __setitem__(self,key,value):
@@ -28,7 +27,7 @@ class Polynomial():
 				sum[m]=self.dict[m]+value.dict[m]
 			else:
 				sum[m]=value.dict[m]
-		p=Polynomial()
+		p=Polynomial()	#to convert dict to Polynomial
 		for i in sum:
 			p[i]=sum[i]
 		return p
@@ -82,7 +81,7 @@ class Polynomial():
 
 	def __getitem__(self,key):
 		if (key in self.dict) == False:
-			return False
+			return False	#cannot return any value other than False
 		else:
 			return self.dict[key]
 
