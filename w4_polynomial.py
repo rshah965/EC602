@@ -1,108 +1,121 @@
-"""
-Provides the class Complex() to mimic the built-in complex class.
-"""
+# Author Rishab Shah rishah@bu.edu
+# Author Deepak T S deepakts@bu.edu
+class Polynomial():
 
-class Complex():
-    "Complex(real,[imag]) -> a complex number"
+	def __init__(self,value=[0]):
+		self.d=value
+		self.dict={}
+		#print(value)
+		x=len(value)-1
+		for i in self.d:
+			if i!=0:
+				self.dict[x]=i
+			x-=1
+			
 
-    def __init__(self,r={},i=[]):
-        self.real = r
-        self.imag = i
+	def __setitem__(self,key,value):
+		self.dict[key]=value
+		
+	def __add__(self,value):
+		sum={}
+		sum=self.dict.copy()
+		for n in sum:
+			if n in value.dict:
+				sum[n]=self.dict[n]+value.dict[n]
+			else:
+				sum[n]=self.dict[n]
+		for m in value.dict:
+			if m in self.dict:
+				sum[m]=self.dict[m]+value.dict[m]
+			else:
+				sum[m]=value.dict[m]
+		p=Polynomial()
+		for i in sum:
+			p[i]=sum[i]
+		return p
 
-    def __abs__(self):
-        "abs(self)"
-        return (self.real**2 +self.imag**2)**0.5
+	def __sub__(self,value):
+		sub={}
+		for n in self.dict:
+			if n in value.dict:
+				sub[n]=self.dict[n]-value.dict[n]
+			else:
+				sub[n]=self.dict[n]
+		for m in value.dict:
+			if m in self.dict:
+				sub[m]=self.dict[m]-value.dict[m]
+			else:
+				sub[m]=-value.dict[m]
+		p=Polynomial()
+		for i in sub:
+			p[i]=sub[i]
+		return p
 
-    def __add__(self,value):
-        "Return self+value."
-        if hasattr(value,'imag'):
-            return Complex(self.real+value.real,self.imag+value.imag)
-        else:
-            return Complex(self.real+value,self.imag)
+	def __mul__(self,value):     
+		prod={}
+		for n in self.dict:
+			for m in value.dict:
+				if m+n in prod:
+					prod[m+n]=prod[m+n]+self.dict[n]*value.dict[m]
+				else:
+					prod[m+n]=self.dict[n]*value.dict[m]
+		p=Polynomial()
+		for i in prod:
+			p[i]=prod[i]
+		return p
 
-    def __mul__(s,v):
-        "Return s*v."
-        if hasattr(v,'imag'):
-            x = s.real * v.real - s.imag * v.imag
-            y = s.real * v.imag + v.real * s.imag
-            return Complex(x,y)
-        else:
-            return Complex(v*s.real,v*s.imag)
+	def deriv(self):
+		deriv={}
+		for i in self.dict:
+			if i!=0:
+				deriv[i-1]=i*self.dict[i]
+		p=Polynomial()
+		for i in deriv:
+			p[i]=deriv[i]
+		return p
 
-    def __rmul__(s,v):
-        "Return s*v"
-        if hasattr(v,'imag'):
-            x = s.real * v.real - s.imag * v.imag
-            y = s.real * v.imag + v.real * s.imag
-            return Complex(x,y)
-        else:
-            return Complex(v*s.real,v*s.imag)
+	def eval(self,value):
+		result=0
+		print(self,value)
+		for i in self.dict:
+			result+=self.dict[i]*(value**i)
+		return result
 
-    def __radd__(self,value):
-        "Return self+value"
-        if hasattr(value,'imag'):
-            return Complex(self.real+value.real,self.imag+value.imag)
-        else:
-            return Complex(self.real+value,self.imag)            
+	def __getitem__(self,key):
+		if (key in self.dict) == False:
+			return False
+		else:
+			return self.dict[key]
 
-    def conjugate(self):
-        return Complex(self.real,-self.imag)
-
-    def __str__(self):
-        if self.real==0:
-            return "{}j".format(self.imag)
-        else:
-            sign="-" if self.imag<0 else "+"
-            return "({}{}{}j)".format(self.real,sign,abs(self.imag))
-
-    def __repr__(self):
-        return str(self)
-
-    def __pow__(self,value):
-        "Return self ** value"
-        raise NotImplementedError('not done yet')
-
-
+	def __eq__(self, other):
+		return self.dict == other
 
 def main():
-    for x,y in [(0,0),(1,0),(0,1),(3,4),(1,-2),(7.8,-6.2)]:
-        print('\nTesting ({},{})'.format(x,y))
-
-        g = Complex(x,y) # ours
-        h = complex(x,y) # builtin
-
-        print(g,h)
-        print(abs(g),abs(h))
-        print(g.conjugate(),h.conjugate())
-        print(g.real,h.real)
-        print(g.imag,h.imag)
-
-        w,y = h+1 , g+1
-        print(w,y)
-        w,y = 1+g , 1+h
-
-        w,y = g * Complex(2,3), h * complex(2,3)
-        print(w,y)
-
-        w,y = g * 4, h * 4
-        print(w,y) 
-
-
-        w,y = 4 * g, 4 * h
-        print(w,y)    
-
-        w,y = g * g, h * h
-        print(w,y)
-        print(type(w),type(y))
-
-        w,y = h * g, g * h
-        print(w,y)
-        print(type(w),type(y)) 
-
-
-        w,y = 4j + g, 4j + h
-        print(w,y)    
-
+	pass
+	p=Polynomial([-3,2.5,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12])
+	p[5]=27777777777777777777
+	#p=Polynomial([])
+	p2=Polynomial()
+	#print(type(p2))
+	p2[5]=277777777777777777777777777
+	#p2[7]=8
+	#print(type(p))
+	'''print(Polynomial([1,2,3,4,5,4,2,34,325]))
+	p3=Polynomial([4,0,1232134312])
+	#p2+=p3
+	print(p3)
+	print(p)
+	print(p3.deriv())
+	print(p2+p)
+	print(p-p2)
+	print(Polynomial([1,2,2,2,3,-4])*Polynomial([3,2,5,7,8]))
+	print(p.deriv())'''
+	#p+=p2
+	print(p.eval(-10))
+	'''print(Polynomial([1,2,3])==Polynomial([1,2,3]))
+	print(p2[10000000000000000000000])
+	print(p*p2)'''
 
 if __name__ == '__main__':
     main()
+
