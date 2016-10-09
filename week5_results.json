@@ -27,6 +27,7 @@
         "poly71.py", 
         "poly12.py", 
         "poly90.py", 
+        "poly36.py", 
         "poly70.py", 
         "poly22.py", 
         "poly24.py", 
@@ -91,16 +92,15 @@
         "poly79.py", 
         "poly43.py", 
         "poly54.py", 
-        "poly96.py"
+        "poly96.py", 
+        "poly10.py",
+        "poly35.py"
     ], 
     "passed": [
         "poly77.py", 
-        "poly36.py", 
-        "poly35.py", 
         "poly62.py", 
         "poly27.py", 
-        "poly63.py", 
-        "poly10.py", 
+        "poly63.py",  
         "poly97.py"
     ], 
     "authors": [
