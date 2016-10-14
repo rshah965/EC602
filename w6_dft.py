@@ -3,16 +3,16 @@
 from numpy import zeros,exp,array,pi
 
 def DFT(x):
-	if (type(x) is "complex" or "int" or "float"):
+	if (type(x) is complex or type(x) is int or type(x) is float):
 		z=list()
 		z.append(x)
 		X=zeros((1,))
 	else:
 		X=zeros((len(x),))
-	for i in range(len(x)):
-		if (type(x[i]) is tuple or type(x[i]) is list or type(x[i]) is dict or type(x[i]) is str):
-			raise ValueError('Input should be a sequence of values only.')
-	N=len(x)
+		for i in range(len(x)):
+			if (type(x[i]) is tuple or type(x[i]) is list or type(x[i]) is dict or type(x[i]) is str):
+				raise ValueError('Input should be a sequence of values only.')
+	N=len(X)
 	n=array(range(N))
 	k=n[:,None]
 	E=exp(-2j * pi * k * n / N)
