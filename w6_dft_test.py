@@ -39,11 +39,9 @@ class DFTTestCase(unittest.TestCase):
 		self.assertRaises(ValueError,DFT,x)
 
 
-	def test_valid_Input_dict(self):
+	def test_invalid_Input_dict(self):
 		x={1:255555555555,2:3,4:-4j}
-		y=[255555555555,3,-4j]
-		for i in range(1,10):
-			self.assertEqual(np.allclose(DFT(x),np.fft.fft(y)),True)
+		self.assertRaises(ValueError,DFT,x)
 
 	def test_valid_Input_list(self):
 		y=[255555555555,3,-4j]
