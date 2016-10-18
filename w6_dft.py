@@ -16,4 +16,4 @@ def DFT(x):
 		E=exp(-2j * pi * k * n / N)
 	except:
 		raise ValueError
-	return sum(a*b for a,b in zip(E,x))yf
+	return sum(a*b for a,b in zip(E,x))
