@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+# AUTHOR Rishab Shah rishah@bu.edu
+import sys
+import subprocess
+import random
+import time
+import numpy as np
+
+
+
+d = sys.argv[1]#double / int
+a = sys.argv[2]
+N = int(sys.argv[3])
+S = eval(a)
+
+
+if d == 'int':
+    for n in S:
+        for m in range(0,N):
+            np.savetxt('test1_'+str(n)+'_'+str(m)+'.txt',random.sample(range(-n*n,n*n),n*n),fmt="%d",delimiter=' ')
+            np.savetxt('test2_'+str(n)+'_'+str(m)+'.txt',random.sample(range(-n*n,n*n),n*n),fmt="%d",delimiter=' ')
+
+if d == 'double':
+    for n in S:
+        for m in range(0,N):
+            np.savetxt('test1_'+str(n)+'_'+str(m)+'.txt',random.sample(range(-n*n,n*n),n*n),fmt="%d",delimiter=' ')
+            np.savetxt('test2_'+str(n)+'_'+str(m)+'.txt',random.sample(range(-n*n,n*n),n*n),fmt="%d",delimiter=' ')
+
+
+
+subprocess.call(["g++","-std=c++14","-O2","w8c_multiply.cpp","-o","w8c_multiply_1"]) # cmd
+subprocess.call(["g++","-std=c++14","-O2","w8c_multiply.cpp","-o","w8c_multiply_2"])
+subprocess.call(["g++","-std=c++14","-O2","w8c_multiply.cpp","-o","w8c_multiply_3"])
+
+
+t = {}
+for n in S:
+    start = time.time()
+    for i in range(0,N):
+        subprocess.call(["./w8p_multiply",d,str(n),"test1_"+str(n)+'_'+str(i)+'.txt',"test2_"+str(n)+'_'+str(i)+'.txt',"testresult.txt"])
+    t['py ' + str(n)] = time.time() - start
+    start = time.time()
+    for i in range(0,N):
+        subprocess.call(["./w8c_multiply_1",d,str(n),"test1_"+str(n)+'_'+str(i)+'.txt',"test2_"+str(n)+'_'+str(i)+'.txt',"testresult.txt"])
+    t['O1 ' + str(n)] = time.time() - start
+    start = time.time()
+    for i in range(0,N):
+        subprocess.call(["./w8c_multiply_2",d,str(n),"test1_"+str(n)+'_'+str(i)+'.txt',"test2_"+str(n)+'_'+str(i)+'.txt',"testresult.txt"])
+    t['O2 ' + str(n)] = time.time() - start
+    start = time.time()
+    for i in range(0,N):
+        subprocess.call(["./w8c_multiply_3",d,str(n),"test1_"+str(n)+'_'+str(i)+'.txt',"test2_"+str(n)+'_'+str(i)+'.txt',"testresult.txt"])
+    t['O3 ' + str(n)] = time.time() - start
+
+b = sorted(t, key=t.get, reverse = True)
+for i in b:
+    print(i, t[i]/N)
