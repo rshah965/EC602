@@ -1,0 +1,105 @@
+#!/usr/bin/env python
+# AUTHOR Prateek Mehta pmehta59@bu.edu
+
+
+
+
+import numpy as np
+import sys
+
+#n= 3
+#m= 3
+#x= 3
+
+    
+
+if ((len(sys.argv)!=6) and (len(sys.argv)!=8)):
+    sys.exit(1)
+    
+if ((len(sys.argv)==6) or (len(sys.argv)==8)):
+    if((sys.argv[1] != 'int') and (sys.argv[1] != 'double')):
+        sys.exit(1)
+
+if(len(sys.argv)==6):
+    n=int(sys.argv[2])
+    m=int(sys.argv[2])
+    x=int(sys.argv[2])
+
+elif(len(sys.argv)==8):
+    n=int(sys.argv[2])
+    m=int(sys.argv[3])
+    x=int(sys.argv[4])
+
+if((int(n)<=0) or int(m)<=0 or int(x)<=0):
+    sys.exit(1)
+    
+
+try:
+    if(len(sys.argv)==6):
+        file1 = sys.argv[3]
+        file2 = sys.argv[4]
+    elif(len(sys.argv)==8):
+        file1 = sys.argv[5]
+        file2 = sys.argv[6]
+        
+    f = open ( file1 , 'r')
+    l = f.read().split() 
+    a = open ( file2 , 'r')
+    b = a.read().split()
+    
+except:
+    sys.exit(2)
+        
+try:
+    
+    
+    l = np.array([float(i) for i in l])
+    b = np.array([float(i) for i in b])    
+        
+    if((len(l)!=n*m) or (len(b)!=m*x)):
+        sys.exit(3)
+    else:
+        g = np.reshape(l, (n, m))
+       
+        h = np.reshape(b, (m, x))
+except:
+    sys.exit(3)
+
+if(sys.argv[1]=='int'):
+    for i in l:
+        if(float(i)!=int(float(i))):
+            sys.exit(3)
+    for i in b:
+        if(float(i)!=int(float(i))):
+            sys.exit(3)
+    
+try:
+    
+    if(sys.argv[1]=='int'):
+         l = np.array([int(i) for i in l])
+         b = np.array([int(i) for i in b])
+         g = np.reshape(l, (n, m))
+         h = np.reshape(b, (m, x))
+         
+    out = g@h
+    s=''
+    for i in range(n):
+        for j in range(x):
+            s+= ' '+str(out[i][j])
+        s+= "\n"
+        if(len(sys.argv)==6):
+            file3 = sys.argv[5]
+        elif(len(sys.argv)==8):
+            file3 = sys.argv[7]
+
+    text_file = open(file3, "w")
+    text_file.write(s)
+    text_file.close()
+
+except:
+    sys.exit(4)
+
+
+
+
+
