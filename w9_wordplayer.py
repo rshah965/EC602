@@ -1,37 +1,40 @@
 # Author Rishab Shah rishah@bu.edu
 
-from itertools import permutations
-from collections import Counter
 import sys
 
-while(1):
+with open(sys.argv[1]) as f:
+    il = f.read().split()
+d = {}
+
+for i in il:
+    d.setdefault(len(i), {})
+    d[len(i)].setdefault(''.join(sorted(i)), [])
+    d[len(i)][''.join(sorted(i))].append(i)
+while(True):
     x = input()
     y = x.split()
     z = int(y[1])
     if z == 0:
         sys.exit(0)
-    with open('big_wordlist.txt') as f:
-        il = f.read().split()
-    d = {}
-    for i in range(21):
-        d[i] = []
-    for i in range(21):
-        for j in range(len(il)):
-            if (len(il[j]) == i):
-                d[i].append(il[j])
+    res = []
 
-    if z <= 8:
-        d[z] = set(d[z])
-        w = {''.join(i) for i in permutations(y[0], z)}
-        match = d[z] & w
-        match = list(match)
-        for i in range(len(match)):
-            print(match[i])
+    y1 = ''.join(sorted(y[0]))
+    if z not in d:
         print('.')
     else:
-        a = Counter(y[0])
-        for i in range(len(d[z])):
-            b = Counter(d[z][i])
-            if (a & b == b):
-                print(d[z][i])
+        if (len(y1) == z):
+            if (y1 in d[z]):
+                for i in d[z][y1]:
+                    res.append(i)
+        else:
+            for i in d[z]:
+                tmp = i
+                for j in y1:
+                    if (len(tmp) != 0 and j == tmp[0]):
+                        tmp = tmp[1:]
+                if len(tmp) == 0:
+                    for k in range(len(d[z][i])):
+                        res.append(d[z][i][k])
+        for i in sorted(res):
+            print(i)
         print('.')
